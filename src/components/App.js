@@ -14,12 +14,12 @@ const PageTwo = () => {
     ) 
 };
 
-const App = () => {
-    return (
+const App = () => {                             // Routers --> Include -->/pagetwo includes / so --> <Route path="/" component={PageOne} /> without exact keyword ->this display in /pagetwo... cause its include /
+    return (                
         <div>
             <BrowserRouter>
                 <div>
-                    <Route path="/" exact component={PageOne} />
+                    <Route path="/" exact component={PageOne} />               
                     <Route path="/pagetwo" component={PageTwo}/>
                 </div>
             </BrowserRouter>
