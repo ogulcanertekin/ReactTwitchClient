@@ -13,6 +13,7 @@ class GoogleAuth extends React.Component{           //Google Api - Gapi
             }).then(()=>{                                                       //Returns promise so using then right there!
                 this.auth = window.gapi.auth2.getAuthInstance();
                 this.setState({isSignedIn:this.auth.isSignedIn.get()})          //isSignedIn - signIn - signOut --> built-in methods in gapi(GoogleApi)    
+                this.auth.isSignedIn.listen(this.onAuthChange);                 //sayfayı yenilemeden güncel olarak ekranda kullanıcı login durumunun görünmesi için, built in method-->listen.
             });
         });
     }
@@ -26,6 +27,10 @@ class GoogleAuth extends React.Component{           //Google Api - Gapi
             return <div>I am not signed in</div>
         }
     }
+
+    onAuthChange = () => {
+        this.setState({isSignedIn:this.auth.isSignedIn.get()})
+    };
 
     render(){
         return <div>{this.renderAuthButton()}</div>
