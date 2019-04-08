@@ -29,16 +29,21 @@ class StreamCreate extends React.Component{
 
     //REFACTORED With destructing --> (formProps) -> ...formProps.input
 
-    renderInput({input}){                             //Field componenta prop gönderebiliyor...//Field yalnızca store işlemlerinden sorumlu...Input prop ile Field propertylerini eslestirmek için->Otomatik olarak Event handlers onChange-value etc...;
-        return <input {...input}/>
+    renderInput({input,label}){                             //Field componenta prop gönderebiliyor...//Field yalnızca store işlemlerinden sorumlu...Input prop ile Field propertylerini eslestirmek için->Otomatik olarak Event handlers onChange-value etc...;
+        return (
+            <div>
+                <label>{label}</label>                     
+                <input {...input}/>                         {/*  formProps.input --> Tüm propertyleri(event Handlerları-onChange-onClick etc...) eşleştirmesi için... */}
+            </div>
+        );
     }
 
     render() {
         //console.log(this.props);
         return(
-            <form>
-                <Field name="title" component={this.renderInput}/>
-                <Field name="description" component={this.renderInput}/>
+            <form className="ui form">
+                <Field name="title" component={this.renderInput} label="Enter Title"/>          {/* Customizing Form Fields with Sending label Prop */}
+                <Field name="description" component={this.renderInput} label="Enter Description"/>
             </form>
         );
     }
