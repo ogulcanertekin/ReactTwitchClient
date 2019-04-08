@@ -21,14 +21,14 @@ class GoogleAuth extends React.Component{           //Google Api - Gapi
     onAuthChange = (isSignedIn) => {
         //this.setState({isSignedIn:this.auth.isSignedIn.get()})
         if(isSignedIn){
-            this.props.signIn();
+            this.props.signIn(this.auth.currentUser.get().getId());         //Send Google Id for store it -->built-in method --> Google Api method
         }else{
             this.props.signOut();
         }
     };
 
     onSignInClick = () =>{
-        this.auth.signIn();
+        this.auth.signIn();      
     }
 
     onSignOutClick = () =>{
@@ -61,7 +61,7 @@ class GoogleAuth extends React.Component{           //Google Api - Gapi
 }
 
 const mapStateToProps = (state) => {
-    return {isSignedIn:state.auth.isSignedIn};
+    return {isSignedIn:state.auth.isSignedIn,userId:state.auth.userId};              //state.auth --> reducers index --> combinereducers... 
 };
 
 export default connect(mapStateToProps,{signIn,signOut})(GoogleAuth);
