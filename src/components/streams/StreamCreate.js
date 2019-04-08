@@ -38,12 +38,30 @@ class StreamCreate extends React.Component{
         );
     }
 
+    /*
+    onSubmit(event){                    //tek tek onChange dinleyerek form elemanlarını submitde yakalamak yerine form handleSubmit kullanırsak işler kolaylaşıyor;
+        event.preventDefault();
+        console.log(event.target.title.value);
+        console.log(event.target.description.value);
+    }
+    */
+
+    onSubmit(formValues){
+        console.log(formValues);                //returns js object with form values...             
+    }  
+
+    // Event Obj kullanmak yerine redux-forms built-in callback fonks--> handle submit işleri bizim için kolaylaştırıyor.Fieldlar ile dogrudan verilere ulasabiliyoruz.Event.target.value demek yerine; 
+
     render() {
         //console.log(this.props);
-        return(
-            <form className="ui form">
+        return(                                                     
+            <form
+            onSubmit={this.props.handleSubmit(this.onSubmit)}                               
+            className="ui form"
+            >              
                 <Field name="title" component={this.renderInput} label="Enter Title"/>          {/* Customizing Form Fields with Sending label Prop */}
                 <Field name="description" component={this.renderInput} label="Enter Description"/>
+                <button className="ui button primary">Submit</button>
             </form>
         );
     }
