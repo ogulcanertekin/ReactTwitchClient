@@ -27,17 +27,29 @@ class StreamCreate extends React.Component{
 
     */
 
+    //Helper method for errors
+    renderError({error,touched}){                       //meta.error ->meta.touched ->destructing . meta içerisinde özel algılayıcı fonks bulunuyor.
+        if(touched && error){
+            return(
+                <div className="ui error message">
+                    <div className="header">{error}</div>
+                </div>
+            );
+        }
+    }
+
     //REFACTORED With destructing --> (formProps) -> ...formProps.input
 
     //meta -->For validation special name.React doing this automatically if validations matches with name property.
 
-    renderInput({input, label, meta}){                             //Field componenta prop gönderebiliyor...//Field yalnızca store işlemlerinden sorumlu...Input prop ile Field propertylerini eslestirmek için->Otomatik olarak Event handlers onChange-value etc...;
+    renderInput = ({input, label, meta})=>{                             //Field componenta prop gönderebiliyor...//Field yalnızca store işlemlerinden sorumlu...Input prop ile Field propertylerini eslestirmek için->Otomatik olarak Event handlers onChange-value etc...;
         //console.log(meta);
+        const className=`field ${meta.error && meta.touched ? 'error':'' }`                                
         return (
-            <div className="field">
+            <div className={className}>
                 <label>{label}</label>                     
-                <input {...input}/>                         {/*  formProps.input --> Tüm propertyleri(event Handlerları-onChange-onClick etc...) eşleştirmesi için... */}
-                <div>{meta.error}</div>
+                <input {...input} autoComplete="off"/>                         {/*  formProps.input --> Tüm propertyleri(event Handlerları-onChange-onClick etc...) eşleştirmesi için... */}
+                {this.renderError(meta)}
             </div>
         );
     }
@@ -61,7 +73,7 @@ class StreamCreate extends React.Component{
         return(                                                     
             <form
             onSubmit={this.props.handleSubmit(this.onSubmit)}                               
-            className="ui form"
+            className="ui form error"
             >              
                 <Field name="title" component={this.renderInput} label="Enter Title"/>          {/* Customizing Form Fields with Sending label Prop */}
                 <Field name="description" component={this.renderInput} label="Enter Description"/>
