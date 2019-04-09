@@ -26,5 +26,7 @@ export const createStream = (formValues) => {
 //Refactored Code-->Action creator for-> Async Api Request with axios and Redux-Thunk (Because Async...)
 
 export const createStream = formValues =>async dispatch => {
-    streams.post('/streams',formValues);
+    const response = await streams.post('/streams',formValues);             // Api returns posted data...
+
+    dispatch({type:CREATE_STREAM,payload:response.data});                   
 };
