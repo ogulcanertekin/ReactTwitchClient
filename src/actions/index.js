@@ -33,8 +33,12 @@ export const createStream = (formValues) => {
 
 //Refactored Code-->Action creator for-> Async Api Request with axios and Redux-Thunk (Because Async...)
 
-export const createStream = formValues =>async dispatch => {
-    const response = await streams.post('/streams',formValues);             // Api returns posted data...
+export const createStream = formValues =>async (dispatch,getState) => {     // redux thunk special argumant getState --> Storea ulasabilmemizi saglıyor.Ve Stream ile olusturan useri İliskilendirebiliyoruz.Cunku Statelerimize daha onceden signedIn oldugunda userId ekliyoruz.Datayı post ederken userId ekleyebiliyoruz.
+    const {userId} = getState().auth;
+    const response = await streams.post('/streams',{...formValues,userId});             // Api returns posted data...
+
+    // const userId=getState().auth.userId;
+    // const response = await streams.post('/streams',{...formValues,userId:userId});
 
     dispatch({type:CREATE_STREAM,payload:response.data});                   
 };
