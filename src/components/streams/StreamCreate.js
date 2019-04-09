@@ -29,11 +29,15 @@ class StreamCreate extends React.Component{
 
     //REFACTORED With destructing --> (formProps) -> ...formProps.input
 
-    renderInput({input,label}){                             //Field componenta prop gönderebiliyor...//Field yalnızca store işlemlerinden sorumlu...Input prop ile Field propertylerini eslestirmek için->Otomatik olarak Event handlers onChange-value etc...;
+    //meta -->For validation special name.React doing this automatically if validations matches with name property.
+
+    renderInput({input, label, meta}){                             //Field componenta prop gönderebiliyor...//Field yalnızca store işlemlerinden sorumlu...Input prop ile Field propertylerini eslestirmek için->Otomatik olarak Event handlers onChange-value etc...;
+        //console.log(meta);
         return (
-            <div>
+            <div className="field">
                 <label>{label}</label>                     
                 <input {...input}/>                         {/*  formProps.input --> Tüm propertyleri(event Handlerları-onChange-onClick etc...) eşleştirmesi için... */}
+                <div>{meta.error}</div>
             </div>
         );
     }
@@ -67,6 +71,22 @@ class StreamCreate extends React.Component{
     }
 };
 
+const validate = (formValues) => {                          //Fonksiyonu exportta redux-forma bagladıktan sonra otomatik olarak fieldlara bakıyor ve burada belirtilen title-description ile eşleşen name propertyleri varsa kontrolu otomatik saglayabiliyor...              
+    const errors={};                                        //Field daha sonra bu erroru component da belirtilen fonksiyona meta adlı özel bir parametre ile gönderebiliyor...
+
+    if(!formValues.title){                                  
+        errors.title='You must enter a title';
+    }
+
+    if(!formValues.description){
+        errors.description='You must enter a description';
+    }
+
+    return errors;
+};
+
 export default reduxForm({                  // Connect with Redux.
-    form:'streamCreate'
+    form:'streamCreate',
+    validate                                //olusturdugumuz validate fonks reduxForm baglıyoruz.
+    //validate: validate
 })(StreamCreate);
