@@ -1,5 +1,7 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';            //Field --> User inputs in react redux...Ekranda bir input göstermekten sorumlu degil yalnızca redux tarafındaki store vb işlemleri yapmak için...Bu yüzden component property eklemek gerekiyor.
+import {connect} from 'react-redux';
+import {createStream} from '../../actions';
 
 class StreamCreate extends React.Component{
 
@@ -62,9 +64,9 @@ class StreamCreate extends React.Component{
     }
     */
 
-    onSubmit(formValues){
-        console.log(formValues);                //returns js object with form values...             
-    }  
+    onSubmit= (formValues) =>{                       //FormValues-> js object with form values... 
+        this.props.createStream(formValues);                                        
+    }; 
 
     // Event Obj kullanmak yerine redux-forms built-in callback fonks--> handle submit işleri bizim için kolaylaştırıyor.Fieldlar ile dogrudan verilere ulasabiliyoruz.Event.target.value demek yerine; 
 
@@ -97,8 +99,12 @@ const validate = (formValues) => {                          //Fonksiyonu exportt
     return errors;
 };
 
-export default reduxForm({                  // Connect with Redux.
+const formWrapped = reduxForm({                  // Connect with Redux.
     form:'streamCreate',
     validate                                //olusturdugumuz validate fonks reduxForm baglıyoruz.
     //validate: validate
 })(StreamCreate);
+
+export default connect(null,{createStream})(formWrapped);              //Form baglantısı ve ayrıca, api request icin actiona ulasmak istedigimizden connect ile bağlantı sağlamamız gerekiyor.
+
+//First Argument --> mapStateToProps, second-> ActionCreator...
