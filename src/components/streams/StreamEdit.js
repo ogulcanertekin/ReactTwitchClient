@@ -1,6 +1,7 @@
 import React from 'react';
 
-const StreamEdit = () => {
+const StreamEdit = (props) => {             //Router(react-router-dom) dan gelen default propertyler ile route parameters yakalanabilir.
+    console.log(props);
     return <div>StreamEdit</div>;
 };
 
