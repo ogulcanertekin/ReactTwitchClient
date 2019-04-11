@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from '../Modal';
+import history from '../../history'; //Popup içerisinde arka plana tıklandıgında kullanıcıyı geriye yönlendirmek için.Yani yes or No butonlarına bagımlı etmemek için...
 
 const StreamDelete = () => {
 
@@ -13,7 +14,7 @@ const StreamDelete = () => {
             <button className="ui button">Cancel</button>
         </React.Fragment>
     );
-
+        
     return ( 
         <div>
             StreamDelete
@@ -21,6 +22,7 @@ const StreamDelete = () => {
                 title="Delete Stream"
                 content="Are you sure you want to delete this stream ?"
                 actions={actions}
+                onDismiss={()=>history.push('/')}
             />
         </div>
     );

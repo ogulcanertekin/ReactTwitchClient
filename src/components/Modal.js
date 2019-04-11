@@ -1,16 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import history from '../history';           //Popup içerisinde arka plana tıklandıgında kullanıcıyı geriye yönlendirmek için.Yani yes or No butonlarına bagımlı etmemek için...
+import ReactDOM from 'react-dom';           
 
 //Modal-->reactDOM.createportal --> 1. parametre içerik 2. parametre ise ; html de referans verdigimiz div.
 //İstedigimiz componentda tanımlayarak kullanabilecegiz.Dogrudan html e ulasmanın bir yolu...
 //Arka plandaki dive atanılan onClick özelliginin default js ile gelen bubbling --> alttki divlere geçme
 //öz durdurmak için içerdeki divlere --> stopPropagation öz atıyoruz ki ; yalnızca arka plana tıklandıgında navigate işlemi yapılsın.
+//props.onDismiss --> Child Componentdan gelen dısarıya tıklandıgında yönlendiren fonks...
 
 const Modal = (props) => {               
     return ReactDOM.createPortal(
         <div 
-            onClick={()=>history.push('/')}
+            onClick={props.onDismiss}
             className="ui dimmer modals visible active"
         >
             <div 
