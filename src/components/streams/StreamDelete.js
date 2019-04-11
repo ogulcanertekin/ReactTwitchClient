@@ -3,11 +3,15 @@ import Modal from '../Modal';
 
 const StreamDelete = () => {
 
+    // JSX ile degisken tanımlarken JS yalnızca bir wrapping blogaa izin veriyor ancak bu stylingi bozuyor...
+    // Bu durumu cözmek icin React.Fragment kullanmamız gerekli.Yani bir wrapped element olusturmalıyım ancak div olusturmak istemiyorum.Cünkü semantic-ui icerisinde fazladan div tanımlayınca styling bozuluyor.buttonlar duzgun gozukmuyor...
+    // React.fragment herhangi bir html basmaz yalnızca wrapped content olusturarak icerdekileri sibling hale getirir.
+    //<> </> seklindede kullanılabilir.
     const actions=(
-        <div>
+        <React.Fragment>
             <button className="ui button negative">Delete</button>
             <button className="ui button">Cancel</button>
-        </div>
+        </React.Fragment>
     );
 
     return ( 
