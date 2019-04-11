@@ -58,10 +58,16 @@ export const fetchStream = (id) => async dispatch => {
     dispatch({type:FETCH_STREAM, payload:response.data});
 };
 
+//PUT REQUEST VS PATCH REQUEST -->
+    // PUT --> Update All Properties of a Record 
+    //PATCH -->Update Some Properties of a Record
+//Put kullandıgımız icin editledigimiz kaydın userIdsini göremedik...Yalnızca bizim gonderdıgımız title & description ile id sabit tutarak kaydı güncelledi.Bu back-end Api response u ile alakalı durum...
+
 export const editStream = (id,formValues) => async dispatch => {
-    const response = await streams.put(`/streams/${id}`,formValues);
+    const response = await streams.patch(`/streams/${id}`,formValues);
 
     dispatch({type:EDIT_STREAM, payload:response.data});
+    history.push('/');
 };
 
 export const deleteStream = (id) => async dispatch => {
