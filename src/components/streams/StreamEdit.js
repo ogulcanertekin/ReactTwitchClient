@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import {fetchStream,editStream} from '../../actions';
@@ -22,13 +23,15 @@ class StreamEdit extends React.Component {           //Router(react-router-dom) 
 
         // Edit formunda formun içerisine InitialValues yollamak için ... redux form içerisinde özel olan prop initialValuesi yolluyoruz...StreamForm redux-form ile olusturulmustu...StreamForm-Redux Form --> Field nameler ile eşleşmeli gonderdigimiz valueler...
         //this.props.stream denildiginde otomatik eslesebilir, veya,
-        //initialValues={{title:`${this.props.stream.title}`, description:`${this.props.stream.description}`}}
+        //initialValues={{title:this.props.stream.title, description:{this.props.stream.description}}} veya Lodash pick fonks ile seçim yapılabilir...        
+        //Ancak ilk durumda --> console.log(formValues) de id ve userid bilgileri de yer alır bunun nedeni;
+        //Bizim forma baslangıcta güncellenecek veriler dısında da tüm stream verisini göndermemizden kaynaklanır...devtoolsda Streamform values incelendiginde bu veriler de gözüküyor.Bunun nedeni biz gönderdigimiz de formun id ve userid degerlerine de sahip olması gerektigini düşünmesidir.
         
         return (        
             <div>
                 <h3>Edit a stream</h3>  
                 <StreamForm 
-                    initialValues={this.props.stream}
+                    initialValues={_.pick(this.props.stream,'title','description')}
                     onSubmit={this.onSubmit} 
                 />
             </div>
