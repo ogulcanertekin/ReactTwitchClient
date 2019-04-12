@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import Modal from '../Modal';
 import history from '../../history';            //Popup içerisinde arka plana tıklandıgında kullanıcıyı geriye yönlendirmek için.Yani yes or No butonlarına bagımlı etmemek için...
-import {fetchStream} from '../../actions';      // Kendi datasını fetch etmeli...
+import {fetchStream,deleteStream} from '../../actions';      // Kendi datasını fetch etmeli...
 
 
 class StreamDelete extends React.Component{
@@ -17,11 +18,15 @@ class StreamDelete extends React.Component{
     // React.fragment herhangi bir html basmaz yalnızca wrapped content olusturarak icerdekileri sibling hale getirir.
     //<> </> seklindede kullanılabilir.
     
+    // () = > callback olarak kullanılmalı deleteStream...
     renderActions(){
+
+        const id = this.props.match.params.id;
+
         return(
             <React.Fragment>
-                <button className="ui button negative">Delete</button>
-                <button className="ui button">Cancel</button>
+                <button onClick={() => this.props.deleteStream(id)} className="ui button negative">Delete</button>
+                <Link to="/" className="ui button">Cancel</Link>
             </React.Fragment>
         );
     } 
@@ -50,4 +55,4 @@ const mapStateToProps = (state,ownProps) => {
     return { stream: state.streams[ownProps.match.params.id]}               //Redux Storeda kayıtlı olan streamlerden, ownProps(special argumant for mapstateToProps)(routedan aldıgımız prop kullanarak) aracılıgıyla silinmek üzere olana key ile erişmek...
 };
 
-export default connect(mapStateToProps,{fetchStream}) (StreamDelete);
+export default connect(mapStateToProps,{fetchStream,deleteStream}) (StreamDelete);
